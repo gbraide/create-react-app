@@ -195,6 +195,19 @@ module.exports = function(
     }
   }
 
+    // Install my custom dependencies.
+    const pkgs = ['install', '--save', verbose && '--verbose'].filter(e => e);
+    // List custom dependencies here
+    pkgs.push('bootstrap');
+    if(pkgs.length){
+      console.log(`Installing my ${pkgs.length} Dependency Package`);
+      const proc = spawn.sync(command, pkgs, { stdio: 'inherit' });
+      if (proc.status !== 0) {
+        console.error(`\`${command} ${pkgs.join(' ')}\` failed`);
+        return;
+      }
+    }
+
   if (useTypeScript) {
     verifyTypeScriptSetup();
   }
